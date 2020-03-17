@@ -8,3 +8,5 @@ npm install
 npm run serve
 npm run test:open
 ```
+
+> Para o funcionamento correto, a api precisa estar em execução. chat-api (https://github.com/thiagofernandols/chat-api)

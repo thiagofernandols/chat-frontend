@@ -3,24 +3,51 @@
       <b-card-group deck>
         <b-card class="text-left">
           <div v-for="msg in messages" :key="msg._id">
-            <b>{{msg}}Thiago </b><i>diz:</i>
-            <b-card-text>wolf ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
+            <b>{{msg.user.nickName}} </b><i>({{ msg.dateMessage | formatDateTime}}) diz:</i>
+            <b-card-text>{{msg.message}}</b-card-text>
           </div>
-          <b>Thiago </b><i>(16/03/2020 22:28) diz:</i>
-            <b-card-text>wolf ipsum dolor sit amet, consectetur adipiscing elit.</b-card-text>
         </b-card>
       </b-card-group>
     </div>
 </template>
 
 <script>
+import axios from 'axios'
 
 export default {
   name: 'Content',
+  props: {
+    chat: Object
+  },
   data: function () {
     return {
-      messages: []
+      messages: [],
+      timer: ''
     }
+  },
+  created () {
+    this.$showPreload()
+    this.fetchMessageList()
+    this.timer = setInterval(this.fetchMessageList, 2000)
+  },
+  methods: {
+    fetchMessageList () {
+      if (this.chat._id) {
+        axios.get(`/historics/chat/${this.chat._id}`)
+          .then(response => {
+            this.messages = response.data.items
+          }).then(() =>
+            this.scrollToEnd()
+          )
+      }
+    },
+    scrollToEnd: function () {
+      var elem = this.$el.querySelector('.card-body')
+      elem.scrollTop = elem.scrollHeight
+    }
+  },
+  beforeDestroy () {
+    clearInterval(this.timer)
   }
 }
 </script>
@@ -30,7 +57,8 @@ export default {
   margin-top: 75px!important;
 }
 .card-body {
-  min-height: 65vh;
+  height: 65vh;
+  overflow: auto;
 }
 
 </style>

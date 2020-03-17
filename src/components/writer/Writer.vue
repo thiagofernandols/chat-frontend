@@ -39,13 +39,13 @@
       >
         <form ref="form" @submit.stop.prevent="handleSubmit">
           <b-form-group v-if="actionModal === 'register'" :state="nameState" :label="$t('writer.name')" label-for="name-input" :invalid-feedback="$t('chat.required')" >
-            <b-form-input id="name-input" v-model="userModal.nickName" :state="nameState" required />
+            <b-form-input id="name-input" v-model="userModal.nickName" :state="nameState" required @keyup.enter="handleSubmit"/>
           </b-form-group>
-          <b-form-group :label="$t('writer.email')" label-for="email-input">
-            <b-form-input id="email-input" v-model="userModal.email" />
+          <b-form-group :label="$t('writer.email')" label-for="email-input" :state="emailState" :invalid-feedback="$t('chat.required')">
+            <b-form-input id="email-input" v-model="userModal.email" :state="emailState" required  @keyup.enter="handleSubmit"/>
           </b-form-group>
-          <b-form-group v-if="actionModal === 'register'" :label="$t('writer.birthday')" label-for="birthday-input">
-            <b-form-input id="birthday-input" type="date" v-model="userModal.birthDay" />
+          <b-form-group v-if="actionModal === 'register'" :label="$t('writer.birthday')" :state="birthDayState" label-for="birthday-input" :invalid-feedback="$t('chat.required')">
+            <b-form-input id="birthday-input" type="date" v-model="userModal.birthDay" :state="birthDayState" required  @keyup.enter="handleSubmit"/>
           </b-form-group>
         </form>
       </b-modal>
@@ -73,7 +73,9 @@ export default {
         email: '',
         birthDay: ''
       },
-      nameState: null
+      nameState: null,
+      emailState: null,
+      birthDayState: null
     }
   },
   mounted: function () {
@@ -87,7 +89,8 @@ export default {
       axios.post('/historics', {
         chat: this.chat._id,
         user: this.userApp._id,
-        message: this.message
+        message: this.message,
+        dateMessage: new Date()
       })
         .then(response => {
           this.message = ''
@@ -116,20 +119,24 @@ export default {
       this.$store.commit('setUser', { nickName: `Observador-${Number(new Date())}` })
       this.observer = true
     },
-    checkFormValidity () {
+    checkFormValidity: function () {
       const valid = this.$refs.form.checkValidity()
       this.nameState = valid
+      this.emailState = valid
+      this.birthDayState = valid
       return valid
     },
-    resetModal () {
+    resetModal: function () {
       this.name = ''
       this.nameState = null
+      this.emailState = null
+      this.birthDayState = null
     },
-    handleOk (bvModalEvt) {
+    handleOk: function (bvModalEvt) {
       bvModalEvt.preventDefault()
       this.handleSubmit()
     },
-    handleSubmit () {
+    handleSubmit: function () {
       if (!this.checkFormValidity()) {
         return
       }

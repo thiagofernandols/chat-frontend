@@ -6,31 +6,20 @@ import CripVueLoading from 'crip-vue-loading'
 axios.defaults.baseURL = process.env.API_ENDPOINT || 'http://localhost:3000'
 
 Vue.use(CripVueLoading, {
-  axios,
   color: '#007bff',
   failColor: '#dc3545',
   height: '3px'
 })
-Vue.extend({
-  methods: {
-    addRequest (e) {
-      this.$loading.start()
-    },
-    completeRequest () {
-      this.$loading.complete()
-    },
-    failRequest () {
-      this.$loading.fail()
-    }
-  }
-})
 
 const success = res => {
+  Vue.prototype.$loading.complete()
   store.dispatch('hidePreload')
   return res
 }
+
 const error = err => {
   store.dispatch('hidePreload')
+  Vue.prototype.$loading.fail()
   if (!err.response) {
     Vue.toasted.global.defaultError({ msg: 'Unavailable service' })
   } else {
@@ -46,6 +35,9 @@ const error = err => {
 axios.interceptors.response.use(success, error)
 
 axios.interceptors.request.use(async (config) => {
+  if (!config.url.includes('/historics/chat/')) {
+    Vue.prototype.$loading.start()
+  }
   if (store.state.userApp && store.state.userApp.accessToken) {
     config.headers.Authorization = `Bearer ${store.state.userApp.accessToken}`
   }

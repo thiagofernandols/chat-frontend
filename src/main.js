@@ -7,6 +7,7 @@ import i18n from './config/i18n'
 import './config/bootstrap'
 import './config/toasted'
 import './config/axios'
+import './config/moment'
 
 Vue.config.productionTip = false
 

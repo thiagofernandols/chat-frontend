@@ -1,7 +1,8 @@
 export const ptBR = {
   chat: {
     nickName: 'Digite seu nome ou nickname',
-    required: 'Campo é obrigatório'
+    required: 'Campo é obrigatório',
+    logged: 'Usuário logado'
   },
   writer: {
     typeHere: 'Digite aqui...',

@@ -1,8 +1,11 @@
 <template>
   <div class="home">
     <Header :title="chat.chatName" />
-    <Content />
+    <Content :chat="chat"/>
     <Writer :chat="chat"/>
+    <div>
+      <b>{{$t('chat.logged')}}: </b><i>{{userApp.nickName}}</i>
+    </div>
   </div>
 </template>
 

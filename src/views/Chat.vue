@@ -46,6 +46,7 @@ export default {
         this.user.nickName = `Observador-${Number(new Date())}`
       }
       this.$store.commit('setUser', this.user)
+      this.$refs.modalNickName.hide()
     },
     promptNickName: function () {
       this.user.nickName = prompt(this.$t('chat.nickName'))
@@ -75,7 +76,7 @@ export default {
     }
   },
   mounted: function () {
-    if (!this.userApp || !this.userApp.nickName) {
+    if (!this.userApp || !this.userApp.email) {
       this.$refs.modalNickName.show()
     }
   },

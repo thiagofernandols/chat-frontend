@@ -23,11 +23,7 @@ const error = err => {
   if (!err.response) {
     Vue.toasted.global.defaultError({ msg: 'Unavailable service' })
   } else {
-    if (err.response.status >= 400 && err.response.status < 500) {
-      Vue.toasted.global.defaultError({ msg: err.response.data.message })
-    } else {
-      Vue.toasted.global.defaultError({ msg: err.response.data.errors[0].message })
-    }
+    Vue.toasted.global.defaultError({ msg: err.response.data.message ? err.response.data.message : err.response.data.errors[0].message })
     return Promise.reject(err)
   }
 }

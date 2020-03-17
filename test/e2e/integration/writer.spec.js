@@ -1,13 +1,13 @@
 import historicMock from '../support/historicMock'
 
 const ApiUri = `/historics/chat/5e7103eb575be54a7030f10e`
-
+const number = Number(new Date())
 context('Writer', () => {
   beforeEach(() => {
     cy.visit('/')
   })
 
-  it('Registered as an observer and then register', () => {
+  it('Registered as an observer and then register and send message', () => {
     cy.get('#modalNickName')
      .get('#name-input')
      .type('Observador')
@@ -22,10 +22,10 @@ context('Writer', () => {
 
       cy.get('#name-input')
         .clear()
-        .type('Thiago Lôbo')
+        .type(`Thiago Lôbo${number}`)
 
       cy.get('#email-input')
-        .type('thiagofernandols@gmail.com')
+        .type(`thiagofernandols${number}@gmail.com`)
       
       cy.get('#birthday-input')
         .type('1987-10-30')
@@ -34,7 +34,14 @@ context('Writer', () => {
         .click()
       
       cy.get('.home > :nth-child(4)')
-        .contains('Usuário logado:')
-        .contains('Thiago Lôbo')
+        .contains(`Thiago Lôbo${number}`)
+      
+      cy.get('#message')
+        .type(`Olá, eu sou Thiago Lôbo${number}`)
+        .get('.col-sm-2 > div > :nth-child(1)')
+        .click()
+
+      cy.get('.card-body')
+        .contains(`Olá, eu sou Thiago Lôbo${number}`)
   })
 })

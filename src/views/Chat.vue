@@ -6,6 +6,14 @@
     <div>
       <b>{{$t('chat.logged')}}: </b><i>{{userApp.nickName}}</i>
     </div>
+    <b-modal id="modalNickName" ref="modalNickName" :title="$t('chat.nickName')" @hidden="handleOk" @ok="handleOk"
+      >
+        <form ref="form" @submit.stop.prevent="handleOk">
+          <b-form-group :label="$t('writer.name')" label-for="name-input" >
+            <b-form-input id="name-input" v-model="nameModal" @keyup.enter="handleOk"/>
+          </b-form-group>
+        </form>
+      </b-modal>
   </div>
 </template>
 
@@ -26,11 +34,19 @@ export default {
   computed: mapState(['userApp']),
   data: function () {
     return {
+      nameModal: '',
       chat: {},
       user: {}
     }
   },
   methods: {
+    handleOk: function () {
+      this.user.nickName = this.nameModal
+      if (!this.user.nickName) {
+        this.user.nickName = `Observador-${Number(new Date())}`
+      }
+      this.$store.commit('setUser', this.user)
+    },
     promptNickName: function () {
       this.user.nickName = prompt(this.$t('chat.nickName'))
       if (!this.user.nickName) {
@@ -58,10 +74,12 @@ export default {
         })
     }
   },
-  created: function () {
+  mounted: function () {
     if (!this.userApp || !this.userApp.nickName) {
-      this.promptNickName()
+      this.$refs.modalNickName.show()
     }
+  },
+  created: function () {
     this.initChat()
   }
 }

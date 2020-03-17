@@ -7,6 +7,10 @@ module.exports = {
     'plugin:vue/essential',
     '@vue/standard'
   ],
+  globals: {
+    "cy": "readonly",
+    "Cypress": "readonly"
+  },
   parserOptions: {
     parser: 'babel-eslint'
   },

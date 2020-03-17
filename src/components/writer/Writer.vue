@@ -10,7 +10,7 @@
               ref="message"
               v-model="message"
               size="lg"
-              :placeholder="observer ? `${$t('writer.welcome')}, ${userApp.nickName}` : $t('writer.typeHere')" />
+              :placeholder="observer ? `${$t('writer.welcome')}, ${userApp.nickName ? userApp.nickName : 'observador'}` : $t('writer.typeHere')" />
           </b-col>
           <b-col sm="2" style="margin:auto;">
             <div style="display: grid;" v-if="!observer">

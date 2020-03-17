@@ -15,7 +15,8 @@ Vue.prototype.$hidePreload = function () {
 export default new Vuex.Store({
   state: {
     preload: false,
-    userApp: {}
+    userApp: {},
+    myMsg: false
   },
   mutations: {
     preload (store, value) {

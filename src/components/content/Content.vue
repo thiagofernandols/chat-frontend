@@ -22,7 +22,8 @@ export default {
   data: function () {
     return {
       messages: [],
-      timer: ''
+      timer: '',
+      count: 0
     }
   },
   created () {
@@ -36,14 +37,24 @@ export default {
         axios.get(`/historics/chat/${this.chat._id}`)
           .then(response => {
             this.messages = response.data.items
-          }).then(() =>
+            if (this.messages.length > this.count && !this.$store.state.myMsg) {
+              this.playSound()
+            }
+          }).then(() => {
             this.scrollToEnd()
-          )
+            this.count = this.messages.length
+            this.$store.state.myMsg = false
+          })
       }
     },
     scrollToEnd: function () {
       var elem = this.$el.querySelector('.card-body')
       elem.scrollTop = elem.scrollHeight
+    },
+    playSound: function () {
+      const teste = new Audio()
+      teste.src = './sound.mp3'
+      teste.play()
     }
   },
   beforeDestroy () {

@@ -94,6 +94,7 @@ export default {
       })
         .then(response => {
           this.message = ''
+          this.$store.state.myMsg = true
         })
     },
     showModal: function (action) {

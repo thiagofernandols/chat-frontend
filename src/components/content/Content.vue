@@ -52,9 +52,9 @@ export default {
       elem.scrollTop = elem.scrollHeight
     },
     playSound: function () {
-      const teste = new Audio()
-      teste.src = './sound.mp3'
-      teste.play()
+      const audio = new Audio()
+      audio.src = './sound.mp3'
+      audio.play()
     }
   },
   beforeDestroy () {

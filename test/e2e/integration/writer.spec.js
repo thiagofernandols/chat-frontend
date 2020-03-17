@@ -1,7 +1,5 @@
-import historicMock from '../support/historicMock'
-
-const ApiUri = `/historics/chat/5e7103eb575be54a7030f10e`
 const number = Number(new Date())
+
 context('Writer', () => {
   beforeEach(() => {
     cy.visit('/')

@@ -116,7 +116,7 @@ export default {
           }
           axios.post('/historics', {
             chat: this.chat._id,
-            message: `${this.userApp.nickName} entrou no chat...`,
+            message: `${this.userApp.nickName} entrou...`,
             dateMessage: new Date()
           })
             .then(this.$store.state.myMsg = true)
@@ -125,7 +125,7 @@ export default {
     logout: function () {
       axios.post('/historics', {
         chat: this.chat._id,
-        message: `${this.userApp.nickName} saiu do chat...`,
+        message: `${this.userApp.nickName} saiu...`,
         dateMessage: new Date()
       })
         .then(() => {

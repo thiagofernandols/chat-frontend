@@ -2,8 +2,8 @@
   <div class="m-3 chat">
       <b-card-group deck>
         <b-card class="text-left">
-          <div v-for="msg in messages" :key="msg._id">
-            <b>{{msg.user.nickName}} </b><i>({{ msg.dateMessage | formatDateTime}}) diz:</i>
+          <div v-for="msg in messages" :key="msg._id" class="mt-3">
+            <b>{{msg.user ? msg.user.nickName : 'Boot'}} </b><i>({{ msg.dateMessage | formatDateTime}}) diz:</i>
             <b-card-text>{{msg.message}}</b-card-text>
           </div>
         </b-card>

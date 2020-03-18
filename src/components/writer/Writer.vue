@@ -114,11 +114,25 @@ export default {
             email: '',
             birthDay: ''
           }
+          axios.post('/historics', {
+            chat: this.chat._id,
+            message: `${this.userApp.nickName} entrou no chat...`,
+            dateMessage: new Date()
+          })
+            .then(this.$store.state.myMsg = true)
         })
     },
     logout: function () {
-      this.$store.commit('setUser', { nickName: `Observador-${Number(new Date())}` })
-      this.observer = true
+      axios.post('/historics', {
+        chat: this.chat._id,
+        message: `${this.userApp.nickName} saiu do chat...`,
+        dateMessage: new Date()
+      })
+        .then(() => {
+          this.$store.commit('setUser', { nickName: `Observador-${Number(new Date())}` })
+          this.observer = true
+          this.$store.state.myMsg = true
+        })
     },
     checkFormValidity: function () {
       const valid = this.$refs.form.checkValidity()

@@ -14,7 +14,7 @@
     "bootstrap-vue": "^2.7.0",
     "core-js": "^3.6.4",
     "crip-vue-loading": "^1.2.5",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "vue": "^2.6.11",
     "vue-i18n": "^8.15.5",
     "vue-loading-overlay": "^3.3.2",
